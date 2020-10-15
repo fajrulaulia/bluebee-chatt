@@ -1,36 +1,37 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  PermissionsAndroid,
-} from 'react-native';
 import Login from './auth/Login'
 import Register from './auth/Register'
 import Index from './home/Index'
 import Roomchatt from './home/RoomChatt'
+import { requestMultiple, PERMISSIONS,checkMultiple } from 'react-native-permissions';
+
 const Stack = createStackNavigator();
+
 function MyStack() {
+
   React.useEffect(() => {
-    GetAllPermissions()
+    async function anyNameFunction() {
+      await GetAllPermissions();
+    }
+    anyNameFunction();
   })
 
   GetAllPermissions = async () => {
     try {
-      await PermissionsAndroid.requestMultiple
-        ([
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-        ]);
-      if ((await PermissionsAndroid.check('android.permission.CAMERA') &&
-        await PermissionsAndroid.check('android.permission.READ_EXTERNAL_STORAGE') &&
-        await PermissionsAndroid.check('android.permission.WRITE_EXTERNAL_STORAGE') &&
-        await PermissionsAndroid.check('android.permission.ACCESS_FINE_LOCATION'))) {
-        return
-      } else {
-        console.log('all permissions denied');
-        return
-      }
+      await requestMultiple([PERMISSIONS.ANDROID.CAMERA, PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+      PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]);
+      checkMultiple([PERMISSIONS.ANDROID.CAMERA, PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+        PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]).then(
+        (statuses) => {
+          console.log('PERMISSIONS.ANDROID.CAMERA', statuses[PERMISSIONS.ANDROID.CAMERA]);
+          console.log('PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE', statuses[PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE]);
+          console.log('PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE', statuses[ PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE]);
+          console.log('PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION', statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]);
+        },
+      );
+      return
+
     } catch (err) {
       console.err(err)
       return

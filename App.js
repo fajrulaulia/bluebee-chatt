@@ -1,11 +1,11 @@
 import React,{Component}from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {AppState} from 'react-native'
-import Online from './src/utils/online'
+import Online from './src/utils/OnlineStatus'
 const onlineService = new Online()
+import Navigator from './src/views/Index'
 
 
-import Navigator from './src/views/index'
 class App extends Component {
 
   componentDidMount() {

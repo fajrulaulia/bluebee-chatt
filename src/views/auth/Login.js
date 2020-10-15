@@ -74,7 +74,8 @@ class Login extends React.Component {
           }
         })
       }
-    }).catch(() => {
+    }).catch((err) => {
+      console.log("err",err)
       this.ToastShow("Please, Enable Geolocation")
       this.SetLoading(false)
     })
