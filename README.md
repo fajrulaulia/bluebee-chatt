@@ -1,5 +1,5 @@
 # neutron-chatt
-Neutron chatt is a chatt application and tracking friends, build from React Native and Firebase
+Neutron chatt is a chatt application and tracking friends, build from React Native and Firebase(for Auth and Chatt DB using Firestore)
 
 ## Requirements
 - Firesbase services like 
